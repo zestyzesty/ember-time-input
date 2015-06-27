@@ -5,20 +5,26 @@ import momentjs from 'moment';
 export default Ember.Component.extend({
   layout: layout,
   classNames: ['time-input'],
+  classNameBindings: ['invalid'],
+
+  format: 'hhmm',
+  invalid: false,
 
   valueString: Ember.computed('value', function() {
-    var format = this.get('format');
-
-    if(Ember.isEmpty(format)) {
-      format = 'hhmm';
-    }
-
-    return momentjs(this.get('value')).format(format);
+    return momentjs(this.get('value')).format(this.get('format'));
   }),
 
   actions: {
-    valueChanged(newValue) {
-      this.sendAction(newValue);
+    valueChanged(valueString) {
+      var parsed = momentjs(valueString, this.get('format'));
+      this.set('invalid', !parsed.isValid());
+      if (parsed.isValid()) {
+        var date = this.get('value');
+        date.setHours(parsed.hours());
+        date.setMinutes(parsed.minutes());
+        this.set('value', date);
+        this.sendAction('action', date);
+      }
     }
   }
 });
