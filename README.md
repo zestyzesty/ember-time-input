@@ -1,6 +1,23 @@
 # Ember-time-input
 
-This README outlines the details of collaborating on this Ember addon.
+A component for inputting times. Uses momentjs and performs basic validation.
+
+## Usage
+
+Exposes a `time-input` component. Use moment conventions for defining format:
+
+http://momentjs.com/docs/#/displaying/format/
+
+Action will be called when the time has changed and can be parsed correctly.
+
+If the date cannot be parsed the element is endowed with the class `.invalid`.
+
+```
+{{time-input value=task.startTime
+             format='h:mm a'
+             action='timeChanged'
+             class='time-edit'}}
+```
 
 ## Installation
 

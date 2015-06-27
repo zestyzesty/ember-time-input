@@ -1,7 +1,7 @@
 {
   "name": "ember-time-input",
-  "version": "0.0.0",
-  "description": "The default blueprint for ember-cli addons.",
+  "version": "0.0.1",
+  "description": "Component for entering times with a text field.",
   "directories": {
     "doc": "doc",
     "test": "tests"
@@ -11,7 +11,10 @@
     "build": "ember build",
     "test": "ember try:testall"
   },
-  "repository": "",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/bdvholmes/ember-time-input.git"
+  },
   "engines": {
     "node": ">= 0.10.0"
   },
