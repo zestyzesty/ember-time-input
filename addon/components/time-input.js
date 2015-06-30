@@ -20,10 +20,11 @@ export default Ember.Component.extend({
       this.set('invalid', !parsed.isValid());
       if (parsed.isValid()) {
         var date = this.get('value');
-        date.setHours(parsed.hours());
-        date.setMinutes(parsed.minutes());
-        this.set('value', date);
-        this.sendAction('action', date);
+        var newDate = new Date(date.getTime());
+        newDate.setHours(parsed.hours());
+        newDate.setMinutes(parsed.minutes());
+        this.set('value', newDate);
+        this.sendAction('action', newDate);
       }
     }
   }
