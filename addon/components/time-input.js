@@ -1,6 +1,6 @@
 import Ember from 'ember';
 import layout from '../templates/components/time-input';
-import momentjs from 'moment';
+import moment from 'moment';
 
 export default Ember.Component.extend({
   layout: layout,
@@ -10,19 +10,31 @@ export default Ember.Component.extend({
   format: 'hhmm',
   invalid: false,
 
-  valueString: Ember.computed('value', function() {
-    return momentjs(this.get('value')).format(this.get('format'));
+  inputIsNativeDate: Ember.computed('value', function() {
+    return this.get('value') instanceof Date;
+  }),
+
+  momentDate: Ember.computed('value', function() {
+    return moment(this.get('value'));
+  }),
+
+  valueString: Ember.computed('momentDate', function() {
+    return this.get('momentDate').format(this.get('format'));
   }),
 
   actions: {
     valueChanged(valueString) {
-      var parsed = momentjs(valueString, this.get('format'));
+      var parsed = moment(valueString, this.get('format'));
       this.set('invalid', !parsed.isValid());
       if (parsed.isValid()) {
-        var date = this.get('value');
-        var newDate = new Date(date.getTime());
-        newDate.setHours(parsed.hours());
-        newDate.setMinutes(parsed.minutes());
+        var newDate = this.get('momentDate').clone();
+        newDate.hours(parsed.hours());
+        newDate.minutes(parsed.minutes());
+
+        if (this.get('inputIsNativeDate')) {
+          newDate = newDate.toDate();
+        }
+
         this.set('value', newDate);
         this.sendAction('action', newDate);
       }
