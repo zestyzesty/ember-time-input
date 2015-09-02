@@ -1,6 +1,6 @@
 {
   "name": "ember-time-input",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Component for entering times with a text field.",
   "directories": {
     "doc": "doc",
