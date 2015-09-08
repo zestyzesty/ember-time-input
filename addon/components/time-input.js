@@ -15,11 +15,14 @@ export default Ember.Component.extend({
   }),
 
   momentDate: Ember.computed('value', function() {
-    return moment(this.get('value'));
+    if (this.get('value')) {
+      return moment(this.get('value'));
+    }
   }),
 
   valueString: Ember.computed('momentDate', function() {
-    return this.get('momentDate').format(this.get('format'));
+    var date = this.get('momentDate');
+    return date ? date.format(this.get('format')) : '';
   }),
 
   actions: {
@@ -27,7 +30,8 @@ export default Ember.Component.extend({
       var parsed = moment(valueString, this.get('format'));
       this.set('invalid', !parsed.isValid());
       if (parsed.isValid()) {
-        var newDate = this.get('momentDate').clone();
+        var oldDate = this.get('momentDate');
+        var newDate = oldDate ? oldDate.clone() : moment();
         newDate.hours(parsed.hours());
         newDate.minutes(parsed.minutes());
 
