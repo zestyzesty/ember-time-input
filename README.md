@@ -19,6 +19,17 @@ If the date cannot be parsed the element is endowed with the class `.invalid`.
              class='time-edit'}}
 ```
 
+## Parameters
+
+You can specify on the `time-input` component.
+
+  - `format` - the date format as recognised by moment.js
+  - `action` - the action to trigger when when the time is changed, passes the new time as a parameter.
+  - `input-class` - classes to add to the input
+  - `placeholder` - the placeholder text for the input
+
+# Contributing
+
 ## Installation
 
 * `git clone` this repository
