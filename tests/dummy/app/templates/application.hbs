@@ -1,3 +1,22 @@
-<h2 id="title">Welcome to Ember.js</h2>
+<h1 id="title">Ember-time-input</h1>
+
+<h2>Basic usage</h2>
+
+<p>The <code>time-input</code> component puts a text field on the screen
+that validates times.</p>
+
+<pre>
+\{{time-input value=time1
+             format='h:mm a'
+             action='timeChanged'
+             class='time-edit'}}
+</pre>
+
+<p>Will produce</p>
+
+{{time-input value=time1
+             format='h:mm a'
+             action='timeChanged'
+             class='time-edit'}}
 
 {{outlet}}
