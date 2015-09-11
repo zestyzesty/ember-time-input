@@ -1,4 +1,4 @@
-# Ember-time-input
+# Ember-time-input [![Build Status](https://travis-ci.org/bdvholmes/ember-time-input.svg)](https://travis-ci.org/bdvholmes/ember-time-input)
 
 A component for inputting times. Uses momentjs and performs basic validation.
 
