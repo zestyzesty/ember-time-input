@@ -1,8 +1,9 @@
 import Ember from 'ember';
 import layout from '../templates/components/time-input';
-import moment from 'moment';
+const { Component, computed, inject, isPresent } = Ember;
 
-export default Ember.Component.extend({
+export default Component.extend({
+  moment: inject.service(),
   layout: layout,
   classNames: ['time-input'],
   classNameBindings: ['invalid'],
@@ -10,28 +11,30 @@ export default Ember.Component.extend({
   format: 'hhmm',
   invalid: false,
 
-  inputIsNativeDate: Ember.computed('value', function() {
+  inputIsNativeDate: computed('value', function() {
     return this.get('value') instanceof Date;
   }),
 
-  momentDate: Ember.computed('value', function() {
-    if (this.get('value')) {
-      return moment(this.get('value'));
+  momentDate: computed('value', function() {
+    if (isPresent(this.get('value'))) {
+      return this.get('moment').moment(this.get('value'));
     }
   }),
 
-  valueString: Ember.computed('momentDate', function() {
-    var date = this.get('momentDate');
+  valueString: computed('momentDate', function() {
+    const date = this.get('momentDate');
     return date ? date.format(this.get('format')) : '';
   }),
 
   actions: {
     valueChanged(valueString) {
-      var parsed = moment(valueString, this.get('format'));
+      const momentService = this.get('moment');
+
+      const parsed = momentService.moment(valueString, this.get('format'));
       this.set('invalid', !parsed.isValid());
       if (parsed.isValid()) {
-        var oldDate = this.get('momentDate');
-        var newDate = oldDate ? oldDate.clone() : moment();
+        const oldDate = this.get('momentDate');
+        let newDate = oldDate ? oldDate.clone() : momentService.moment();
         newDate.hours(parsed.hours());
         newDate.minutes(parsed.minutes());
 
